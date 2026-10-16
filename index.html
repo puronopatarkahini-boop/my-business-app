@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#d92d48">
+<meta name="description" content="My Business number buying, selling and rental tracker">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" type="image/png">
+
 <title>My Business</title>
 <style>
 :root{--red:#d92d48;--green:#16834a;--pink:#d6336c;--ink:#20242b;--muted:#737b87;--bg:#f6f7fb;--card:#fff;--line:#e8eaf0;--blue:#315dd8}
@@ -110,6 +114,13 @@ function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'appli
 function importData(file){let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.buys)||!Array.isArray(x.sells))throw Error();if(confirm('বর্তমান ডেটা replace করে backup import করব?')){db=x;saveDB();alert('Backup imported.')}}catch(e){alert('Backup file ঠিক নয়।')}};r.readAsText(file)}
 $('exportBtn').onclick=exportData;$('importFile').addEventListener('change',e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value=''});
 renderAll();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
